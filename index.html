@@ -4,44 +4,42 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Sistema de indicadores de bienestar policial — Policía Nacional del Ecuador, Fase 2.">
-  <title>Indicadores de Bienestar Policial · Ecuador</title>
+  <title>Sistema de Indicadores · Bienestar Policial · Ecuador</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header class="hero">
-  <div class="hero-inner">
-    <div>
-      <div class="eyebrow">Policía Nacional del Ecuador · Fase 2</div>
-      <h1>Indicadores de Bienestar Policial</h1>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div>
+        <div class="kicker">Policía Nacional del Ecuador · Fase 2</div>
+        <h1>Sistema de Indicadores de Bienestar Policial</h1>
+      </div>
+      <div class="cutoff">Corte 24.09.2026</div>
     </div>
-    <div class="hero-count"><strong id="heroTotal">—</strong><span>indicadores</span></div>
-  </div>
-</header>
+  </header>
 
-<main class="wrap">
-  <div id="dimNav" class="dimension-nav"></div>
+  <main>
+    <nav id="dimNav" class="dimension-nav" aria-label="Dimensiones"></nav>
 
-  <section class="controls">
-    <input id="search" type="search" placeholder="Buscar dato, indicador o fuente…">
-    <select id="dimension"><option value="">Todas las dimensiones</option></select>
-    <select id="status"><option value="">Todos los estados</option></select>
-    <button id="reset">Limpiar</button>
-    <button id="exportBtn">CSV</button>
-  </section>
+    <section class="toolbar">
+      <div class="view-switch" role="group" aria-label="Vista">
+        <button class="view-btn active" data-view="data">Datos</button>
+        <button class="view-btn" data-view="gaps">Vacíos</button>
+        <button class="view-btn" data-view="all">Todos</button>
+      </div>
+      <input id="search" type="search" placeholder="Buscar indicador o fuente">
+      <button id="exportBtn" class="ghost">CSV</button>
+    </section>
 
-  <div class="results-bar">
-    <strong id="resultCount"></strong>
-    <span>Datos disponibles primero; vacíos de información al final de cada dimensión.</span>
-  </div>
+    <div class="counter"><strong id="resultCount">—</strong></div>
+    <div id="cards"></div>
+  </main>
 
-  <div id="cards"></div>
-</main>
+  <footer>
+    Cada tarjeta conserva periodo y fuente. Los vacíos se muestran en una vista separada para no competir visualmente con los datos.
+  </footer>
 
-<footer class="footer">
-  Corte: 24 de septiembre de 2026 · Fuente visible en cada tarjeta · Los estados describen disponibilidad de evidencia, no desempeño.
-</footer>
-
-<script src="data.js"></script>
-<script src="app.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
