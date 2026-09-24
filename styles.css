@@ -185,24 +185,8 @@ main{
   align-items:stretch;
   margin-bottom:14px;
 }
-.single-value{
-  grid-template-columns:1fr;
-}
-.multi-values{
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:9px;
-}
+.single-value{grid-template-columns:1fr}
 .fact{min-width:0}
-.mini-card{
-  background:#f5f8fb;
-  border:1px solid #e2e8ef;
-  border-radius:12px;
-  padding:11px 12px 10px;
-  min-height:86px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-}
 .fact-number{
   font-size:clamp(1.85rem,2.65vw,3rem);
   line-height:.96;
@@ -212,17 +196,10 @@ main{
   font-variant-numeric:tabular-nums;
   overflow-wrap:anywhere;
 }
-.multi-values .fact-number{
-  font-size:clamp(1.45rem,2.05vw,2.2rem);
-  letter-spacing:-.045em;
-}
 .fact-number.compact{
   font-size:clamp(1.15rem,1.9vw,1.85rem);
   line-height:1.08;
   letter-spacing:-.035em;
-}
-.multi-values .fact-number.compact{
-  font-size:clamp(1.05rem,1.55vw,1.55rem);
 }
 .fact-label{
   margin-top:7px;
@@ -231,9 +208,73 @@ main{
   line-height:1.2;
   font-weight:750;
 }
-.multi-values .fact-label{
+
+/* Cards contenedoras para indicadores con varios datos */
+.multi-parent{
+  background:#f7f9fc;
+  padding:16px;
+}
+.parent-head{
+  padding:1px 2px 12px;
+  border-bottom:1px solid #e2e8ef;
+  margin-bottom:12px;
+}
+.multi-parent .card-title{
+  font-size:.96rem;
+  margin-bottom:5px;
+}
+.mini-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+  margin-bottom:14px;
+}
+.mini-card{
+  min-width:0;
+  min-height:105px;
+  background:#ffffff;
+  border:1px solid #cfd9e4;
+  border-top:4px solid var(--accent);
+  border-radius:13px;
+  padding:12px 13px 13px;
+  box-shadow:0 2px 7px rgba(25,48,76,.07);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+.mini-label{
+  color:#627388;
+  font-size:.69rem;
+  line-height:1.2;
+  font-weight:800;
   min-height:1.7em;
 }
+.mini-number{
+  margin-top:10px;
+  color:#0d2948;
+  font-size:clamp(1.55rem,2.15vw,2.35rem);
+  line-height:.95;
+  font-weight:900;
+  letter-spacing:-.05em;
+  font-variant-numeric:tabular-nums;
+  overflow-wrap:anywhere;
+}
+.mini-number.compact{
+  font-size:clamp(1.08rem,1.55vw,1.55rem);
+  line-height:1.06;
+  letter-spacing:-.025em;
+}
+.mini-grid.count-3 .mini-card:last-child,
+.mini-grid.count-5 .mini-card:last-child{
+  grid-column:1 / -1;
+}
+.multi-parent .source{
+  background:#fff;
+  border:1px solid #e0e6ed;
+  border-radius:10px;
+  padding:9px 10px;
+}
+
 .card-title{
   font-size:.91rem;
   line-height:1.28;
@@ -304,9 +345,11 @@ footer{
   .grid{grid-template-columns:1fr}
   .card{min-height:auto;padding:16px 15px 13px}
   .fact-number{font-size:2.55rem}
-  .multi-values{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-  .mini-card{min-height:80px;padding:10px}
-  .multi-values .fact-number{font-size:1.8rem}
+  .mini-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .mini-card{min-height:94px;padding:11px}
+  .mini-number{font-size:1.85rem}
+  .mini-grid.count-3 .mini-card:last-child,
+  .mini-grid.count-5 .mini-card:last-child{grid-column:1 / -1}
   .section-head span{display:none}
   footer{padding:0 14px 26px}
 }
