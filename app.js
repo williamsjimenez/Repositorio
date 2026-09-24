@@ -22,10 +22,17 @@ function valueParts(x){
   return String(x.v||"").split(" · ").map(parseChunk);
 }
 
+function numberSizeClass(value){
+  const n=String(value||"").replace(/\s+/g," ").trim().length;
+  if(n<=8) return "num-short";
+  if(n<=15) return "num-medium";
+  return "num-long";
+}
+
 function singleValueHTML(parts){
   const f=parts[0];
   return '<div class="values single-value"><div class="fact">'+
-    '<div class="fact-number '+(f.compact?"compact":"")+'">'+esc(f.value)+'</div>'+
+    '<div class="fact-number '+numberSizeClass(f.value)+'">'+esc(f.value)+'</div>'+
     (f.label?'<div class="fact-label">'+esc(f.label)+'</div>':'')+
     '</div></div>';
 }
@@ -33,8 +40,8 @@ function singleValueHTML(parts){
 function miniCardsHTML(parts){
   return '<div class="mini-grid count-'+parts.length+'">'+parts.map(f=>
     '<div class="mini-card">'+
+      '<div class="mini-number '+numberSizeClass(f.value)+'">'+esc(f.value)+'</div>'+
       (f.label?'<div class="mini-label">'+esc(f.label)+'</div>':'<div class="mini-label">Dato</div>')+
-      '<div class="mini-number '+(f.compact?"compact":"")+'">'+esc(f.value)+'</div>'+
     '</div>'
   ).join("")+'</div>';
 }
