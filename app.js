@@ -18,12 +18,24 @@ function parseChunk(chunk){
   return {label:"",value:s,compact:s.length>18};
 }
 
-function valuesHTML(x){
-  const parts=String(x.v||"").split(" · ").map(parseChunk);
-  const multi=parts.length>1;
-  return '<div class="values '+(multi?"multi-values":"single-value")+'">'+parts.map(f=>
-    '<div class="fact '+(multi?"mini-card":"")+'"><div class="fact-number '+(f.compact?"compact":"")+'">'+esc(f.value)+'</div>'+
-    (f.label?'<div class="fact-label">'+esc(f.label)+'</div>':'')+'</div>'
+function valueParts(x){
+  return String(x.v||"").split(" · ").map(parseChunk);
+}
+
+function singleValueHTML(parts){
+  const f=parts[0];
+  return '<div class="values single-value"><div class="fact">'+
+    '<div class="fact-number '+(f.compact?"compact":"")+'">'+esc(f.value)+'</div>'+
+    (f.label?'<div class="fact-label">'+esc(f.label)+'</div>':'')+
+    '</div></div>';
+}
+
+function miniCardsHTML(parts){
+  return '<div class="mini-grid count-'+parts.length+'">'+parts.map(f=>
+    '<div class="mini-card">'+
+      (f.label?'<div class="mini-label">'+esc(f.label)+'</div>':'<div class="mini-label">Dato</div>')+
+      '<div class="mini-number '+(f.compact?"compact":"")+'">'+esc(f.value)+'</div>'+
+    '</div>'
   ).join("")+'</div>';
 }
 
@@ -53,8 +65,17 @@ function cardHTML(x){
       (x.required?'<div class="required"><b>Dato necesario:</b> '+esc(x.required)+'</div>':'')+
       '</article>';
   }
+  const parts=valueParts(x);
+  if(parts.length>1){
+    return '<article class="card multi-parent '+dimClass(x.d)+'">'+
+      '<div class="parent-head"><h3 class="card-title">'+esc(x.n)+'</h3>'+
+      '<div class="meta">'+esc(x.u)+' · '+esc(x.p)+'</div></div>'+
+      miniCardsHTML(parts)+
+      '<div class="source"><b>Fuente:</b> '+esc(x.source)+' · '+esc(x.locator)+'</div>'+
+      '</article>';
+  }
   return '<article class="card '+dimClass(x.d)+'">'+
-    valuesHTML(x)+
+    singleValueHTML(parts)+
     '<h3 class="card-title">'+esc(x.n)+'</h3>'+
     '<div class="meta">'+esc(x.u)+' · '+esc(x.p)+'</div>'+
     '<div class="source"><b>Fuente:</b> '+esc(x.source)+' · '+esc(x.locator)+'</div>'+
