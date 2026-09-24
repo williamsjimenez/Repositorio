@@ -19,10 +19,12 @@ function parseChunk(chunk){
 }
 
 function valuesHTML(x){
-  return String(x.v||"").split(" · ").map(parseChunk).map(f=>
-    '<div class="fact"><div class="fact-number '+(f.compact?"compact":"")+'">'+esc(f.value)+'</div>'+
+  const parts=String(x.v||"").split(" · ").map(parseChunk);
+  const multi=parts.length>1;
+  return '<div class="values '+(multi?"multi-values":"single-value")+'">'+parts.map(f=>
+    '<div class="fact '+(multi?"mini-card":"")+'"><div class="fact-number '+(f.compact?"compact":"")+'">'+esc(f.value)+'</div>'+
     (f.label?'<div class="fact-label">'+esc(f.label)+'</div>':'')+'</div>'
-  ).join("");
+  ).join("")+'</div>';
 }
 
 function keep(x){
@@ -52,7 +54,7 @@ function cardHTML(x){
       '</article>';
   }
   return '<article class="card '+dimClass(x.d)+'">'+
-    '<div class="values">'+valuesHTML(x)+'</div>'+
+    valuesHTML(x)+
     '<h3 class="card-title">'+esc(x.n)+'</h3>'+
     '<div class="meta">'+esc(x.u)+' · '+esc(x.p)+'</div>'+
     '<div class="source"><b>Fuente:</b> '+esc(x.source)+' · '+esc(x.locator)+'</div>'+
