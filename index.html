@@ -1,12 +1,47 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Sistema diagnóstico de indicadores de bienestar de la Policía Nacional del Ecuador, Fase 2."><title>Sistema de Indicadores · Bienestar Policial · Ecuador</title><link rel="stylesheet" href="styles.css"></head><body>
-<header class="hero"><div class="eyebrow">Fase 2 · Diagnóstico integral</div><h1>Sistema de Indicadores de Bienestar Policial</h1><p>Organiza la evidencia cuantitativa, institucional y documental disponible para las cinco dimensiones del bienestar policial. Integra los indicadores utilizados en el Informe 2 y las variables que no pudieron estimarse por ausencia de denominadores, series primarias, desagregaciones o resultados.</p><div class="hero-meta">Corte: 24 de septiembre de 2026 · Policía Nacional del Ecuador · Uso diagnóstico, no diseño definitivo del sistema de bienestar</div></header>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Sistema de indicadores de bienestar policial — Policía Nacional del Ecuador, Fase 2.">
+  <title>Indicadores de Bienestar Policial · Ecuador</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow">Policía Nacional del Ecuador · Fase 2</div>
+      <h1>Indicadores de Bienestar Policial</h1>
+    </div>
+    <div class="hero-count"><strong id="heroTotal">—</strong><span>indicadores</span></div>
+  </div>
+</header>
+
 <main class="wrap">
-<section class="summary"><div class="kpi"><b id="total">—</b><span>indicadores y variables</span></div><div class="kpi"><b id="with">—</b><span>con dato disponible o calculado</span></div><div class="kpi"><b id="partial">—</b><span>parciales o localizados</span></div><div class="kpi"><b id="gap">—</b><span>pendientes o no documentados</span></div><div class="kpi"><b id="dims">—</b><span>dimensiones</span></div><div class="kpi"><b id="subcats">—</b><span>subcategorías cubiertas</span></div></section>
-<section class="controls"><input id="search" type="search" placeholder="Buscar indicador, fuente, categoría o dato…"><select id="dimension"><option value="">Todas las dimensiones</option></select><select id="status"><option value="">Todos los estados de evidencia</option></select><button id="reset">Limpiar</button></section>
-<div id="dimNav" class="dimension-nav"></div>
-<div class="notice"><strong>Regla de lectura.</strong> “Disponible”, “cálculo derivado”, “parcial/localizado”, “fuente pendiente” y “no documentado” describen únicamente el estado de la evidencia. No expresan un juicio sobre desempeño, criticidad ni prioridad. No se aplican umbrales inventados. Cuando un indicador carece de datos, la tarjeta precisa qué información sería necesaria para calcularlo.</div>
-<div class="section-head"><h2>Indicadores</h2><div><span id="resultCount"></span> · <button id="exportBtn">Exportar CSV visible</button></div></div>
-<div id="cards"></div>
+  <div id="dimNav" class="dimension-nav"></div>
+
+  <section class="controls">
+    <input id="search" type="search" placeholder="Buscar dato, indicador o fuente…">
+    <select id="dimension"><option value="">Todas las dimensiones</option></select>
+    <select id="status"><option value="">Todos los estados</option></select>
+    <button id="reset">Limpiar</button>
+    <button id="exportBtn">CSV</button>
+  </section>
+
+  <div class="results-bar">
+    <strong id="resultCount"></strong>
+    <span>Datos disponibles primero; vacíos de información al final de cada dimensión.</span>
+  </div>
+
+  <div id="cards"></div>
 </main>
-<footer class="footer">Fuentes principales: documentos originales de DNAIS, DNBSO, DNE/CECPOL, DNATH, DNL, ISSPOL, Servicio de Cesantía, normativa institucional y matrices de revisión de la Fase 2. El sistema conserva separadas personas, pacientes, consultas, actuaciones, procedimientos, operaciones financieras, registros de infraestructura y eventos. Los indicadores localizados no se extrapolan al conjunto institucional. La actualización futura debe reemplazar las tarjetas pendientes cuando se reciban las fuentes primarias correspondientes.</footer>
-<script src="data.js"></script><script src="app.js"></script></body></html>
+
+<footer class="footer">
+  Corte: 24 de septiembre de 2026 · Fuente visible en cada tarjeta · Los estados describen disponibilidad de evidencia, no desempeño.
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
