@@ -182,14 +182,29 @@ main{
 
 .values{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(118px,1fr));
-  gap:12px;
-  align-items:start;
-  margin-bottom:12px;
+  align-items:stretch;
+  margin-bottom:14px;
+}
+.single-value{
+  grid-template-columns:1fr;
+}
+.multi-values{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:9px;
 }
 .fact{min-width:0}
+.mini-card{
+  background:#f5f8fb;
+  border:1px solid #e2e8ef;
+  border-radius:12px;
+  padding:11px 12px 10px;
+  min-height:86px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
 .fact-number{
-  font-size:clamp(1.75rem,2.55vw,2.9rem);
+  font-size:clamp(1.85rem,2.65vw,3rem);
   line-height:.96;
   font-weight:900;
   letter-spacing:-.055em;
@@ -197,17 +212,27 @@ main{
   font-variant-numeric:tabular-nums;
   overflow-wrap:anywhere;
 }
+.multi-values .fact-number{
+  font-size:clamp(1.45rem,2.05vw,2.2rem);
+  letter-spacing:-.045em;
+}
 .fact-number.compact{
   font-size:clamp(1.15rem,1.9vw,1.85rem);
   line-height:1.08;
   letter-spacing:-.035em;
 }
+.multi-values .fact-number.compact{
+  font-size:clamp(1.05rem,1.55vw,1.55rem);
+}
 .fact-label{
-  margin-top:6px;
-  color:#69798c;
-  font-size:.68rem;
-  line-height:1.25;
-  font-weight:700;
+  margin-top:7px;
+  color:#607186;
+  font-size:.69rem;
+  line-height:1.2;
+  font-weight:750;
+}
+.multi-values .fact-label{
+  min-height:1.7em;
 }
 .card-title{
   font-size:.91rem;
@@ -279,6 +304,9 @@ footer{
   .grid{grid-template-columns:1fr}
   .card{min-height:auto;padding:16px 15px 13px}
   .fact-number{font-size:2.55rem}
+  .multi-values{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .mini-card{min-height:80px;padding:10px}
+  .multi-values .fact-number{font-size:1.8rem}
   .section-head span{display:none}
   footer{padding:0 14px 26px}
 }
