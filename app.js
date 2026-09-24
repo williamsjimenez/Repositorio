@@ -61,6 +61,12 @@ function renderNav(){
     dims.map(d=>'<button class="dim-btn" data-dim="'+esc(d)+'">'+esc(d.replace(/^\d+\.\s*/,""))+'</button>').join("");
 }
 
+function sourceHTML(x){
+  const link=x.url?'<a class="source-link" href="'+esc(x.url)+'" target="_blank" rel="noopener noreferrer">Abrir fuente</a>':'';
+  const note=x.note?'<details class="method-note"><summary>Nota metodológica</summary><div>'+esc(x.note)+'</div></details>':'';
+  return '<div class="source"><div><b>Fuente:</b> '+esc(x.source)+'</div><div class="locator">'+esc(x.locator)+'</div>'+link+note+'</div>';
+}
+
 function cardHTML(x){
   const isGap=gapStatuses.has(x.status);
   if(isGap){
@@ -68,7 +74,7 @@ function cardHTML(x){
       '<div class="gap-word">'+(x.status==="no_documentado"?"No documentado":"Pendiente")+'</div>'+
       '<h3 class="card-title">'+esc(x.n)+'</h3>'+
       '<div class="meta">'+esc(x.u)+' · '+esc(x.p)+'</div>'+
-      '<div class="source"><b>Fuente:</b> '+esc(x.source)+' · '+esc(x.locator)+'</div>'+
+      sourceHTML(x)+
       (x.required?'<div class="required"><b>Dato necesario:</b> '+esc(x.required)+'</div>':'')+
       '</article>';
   }
@@ -78,14 +84,14 @@ function cardHTML(x){
       '<div class="parent-head"><h3 class="card-title">'+esc(x.n)+'</h3>'+
       '<div class="meta">'+esc(x.u)+' · '+esc(x.p)+'</div></div>'+
       miniCardsHTML(parts)+
-      '<div class="source"><b>Fuente:</b> '+esc(x.source)+' · '+esc(x.locator)+'</div>'+
+      sourceHTML(x)+
       '</article>';
   }
   return '<article class="card '+dimClass(x.d)+'">'+
     singleValueHTML(parts)+
     '<h3 class="card-title">'+esc(x.n)+'</h3>'+
     '<div class="meta">'+esc(x.u)+' · '+esc(x.p)+'</div>'+
-    '<div class="source"><b>Fuente:</b> '+esc(x.source)+' · '+esc(x.locator)+'</div>'+
+    sourceHTML(x)+
     '</article>';
 }
 
@@ -96,17 +102,24 @@ function render(){
   if(!rows.length){root.innerHTML='<div class="empty">Sin resultados.</div>';return}
   const groups=new Map();
   rows.forEach(x=>{if(!groups.has(x.d))groups.set(x.d,[]);groups.get(x.d).push(x)});
-  root.innerHTML=[...groups.entries()].map(([d,items])=>
-    '<section class="section"><div class="section-head"><h2>'+esc(d)+'</h2><span>'+items.length+' indicadores</span></div>'+
-    '<div class="grid">'+items.map(cardHTML).join("")+'</div></section>'
-  ).join("");
+  root.innerHTML=[...groups.entries()].map(([d,items])=>{
+    const categories=new Map();
+    items.forEach(x=>{if(!categories.has(x.c))categories.set(x.c,[]);categories.get(x.c).push(x)});
+    const body=[...categories.entries()].map(([c,catItems])=>
+      '<div class="category-block">'+
+        '<div class="category-head"><h3>'+esc(c)+'</h3><span>'+catItems.length+' indicadores</span></div>'+
+        '<div class="grid">'+catItems.map(cardHTML).join("")+'</div>'+
+      '</div>'
+    ).join("");
+    return '<section class="section"><div class="section-head"><h2>'+esc(d)+'</h2><span>'+items.length+' indicadores</span></div>'+body+'</section>';
+  }).join("");
 }
 
 function exportCSV(){
   const rows=DATA.filter(keep);
-  const cols=["id","dimension","categoria","subcategoria","indicador","valor","unidad","periodo","estado","tipo","fuente","localizacion","dato_requerido"];
+  const cols=["id","dimension","categoria","subcategoria","indicador","valor","unidad","periodo","estado","tipo","fuente","localizacion","url_fuente","dato_requerido","nota"];
   const q=v=>'"'+String(v??"").replaceAll('"','""')+'"';
-  const lines=[cols.join(",")].concat(rows.map(x=>[x.id,x.d,x.c,x.s,x.n,x.v,x.u,x.p,x.status,x.type,x.source,x.locator,x.required||""].map(q).join(",")));
+  const lines=[cols.join(",")].concat(rows.map(x=>[x.id,x.d,x.c,x.s,x.n,x.v,x.u,x.p,x.status,x.type,x.source,x.locator,x.url||"",x.required||"",x.note||""].map(q).join(",")));
   const a=document.createElement("a");
   a.href=URL.createObjectURL(new Blob(["\ufeff"+lines.join("\n")],{type:"text/csv;charset=utf-8"}));
   a.download="indicadores_bienestar_policial.csv";
